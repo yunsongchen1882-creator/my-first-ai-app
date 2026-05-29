@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早春美景 - 草长莺飞二月天</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e8f4f8 0%, #f0f8ff 50%, #f5f0e1 100%);
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            overflow: hidden;
+        }
+
+        .poster {
+            width: 90%;
+            max-width: 1200px;
+            height: 700px;
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(245, 248, 235, 0.95) 50%,
+                rgba(238, 245, 228, 0.9) 100%);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(144, 238, 144, 0.3),
+                0 10px 30px rgba(147, 112, 219, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(180deg,
+                #87CEEB 0%,
+                #B0E0E6 30%,
+                #E0FFFF 60%,
+                #FAFAD2 100%);
+            z-index: 1;
+        }
+
+        .sun {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #FFE4B5 0%, #FFD700 50%, #FFA500 100%);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.6),
+                0 0 80px rgba(255, 215, 0, 0.3);
+            animation: sunPulse 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), 0 0 100px rgba(255, 215, 0, 0.4); }
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            z-index: 2;
+            animation: cloudFloat 20s ease-in-out infinite;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .cloud-1 {
+            top: 40px;
+            left: 10%;
+            width: 80px;
+            height: 30px;
+            animation-delay: 0s;
+        }
+        .cloud-1::before { width: 40px; height: 40px; top: -20px; left: 15px; }
+        .cloud-1::after { width: 50px; height: 50px; top: -25px; left: 35px; }
+
+        .cloud-2 {
+            top: 80px;
+            right: 20%;
+            width: 100px;
+            height: 35px;
+            animation-delay: -8s;
+        }
+        .cloud-2::before { width: 50px; height: 50px; top: -25px; left: 20px; }
+        .cloud-2::after { width: 60px; height: 55px; top: -30px; left: 45px; }
+
+        .cloud-3 {
+            top: 50px;
+            left: 50%;
+            width: 70px;
+            height: 25px;
+            animation-delay: -15s;
+        }
+        .cloud-3::before { width: 35px; height: 35px; top: -18px; left: 12px; }
+        .cloud-3::after { width: 40px; height: 40px; top: -22px; left: 30px; }
+
+        @keyframes cloudFloat {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+        }
+
+        .mist {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20%;
+            background: linear-gradient(180deg,
+                rgba(255, 255, 255, 0.8) 0%,
+                rgba(200, 220, 200, 0.6) 50%,
+                rgba(180, 210, 180, 0.3) 100%);
+            z-index: 3;
+            animation: mistFlow 8s ease-in-out infinite;
+        }
+
+        @keyframes mistFlow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .willow-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            z-index: 4;
+        }
+
+        .willow-tree {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .willow-tree-1 {
+            left: 5%;
+        }
+
+        .willow-tree-2 {
+            left: 15%;
+        }
+
+        .willow-tree-3 {
+            right: 8%;
+        }
+
+        .willow-tree-4 {
+            right: 20%;
+        }
+
+        .willow-trunk {
+            width: 25px;
+            height: 200px;
+            background: linear-gradient(90deg, #8B4513 0%, #A0522D 50%, #8B4513 100%);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .willow-branch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: left center;
+        }
+
+        .branch-1 { transform: translateX(-50%) rotate(-20deg); }
+        .branch-2 { transform: translateX(-50%) rotate(-10deg); }
+        .branch-3 { transform: translateX(-50%) rotate(0deg); }
+        .branch-4 { transform: translateX(-50%) rotate(10deg); }
+        .branch-5 { transform: translateX(-50%) rotate(20deg); }
+
+        .willow-leaves {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: willowSway 3s ease-in-out infinite;
+        }
+
+        @keyframes willowSway {
+            0%, 100% { transform: rotate(-2deg) translateX(0); }
+            50% { transform: rotate(2deg) translateX(5px); }
+        }
+
+        .leaf {
+            width: 12px;
+            height: 25px;
+            background: linear-gradient(135deg, #90EE90 0%, #32CD32 50%, #228B22 100%);
+            border-radius: 0 50% 50% 50%;
+            transform-origin: top center;
+            animation: leafFloat 4s ease-in-out infinite;
+        }
+
+        .leaf:nth-child(odd) { animation-delay: -1s; }
+        .leaf:nth-child(even) { animation-delay: -2.5s; }
+
+        @keyframes leafFloat {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            25% { transform: rotate(5deg) translateY(-3px); }
+            75% { transform: rotate(-5deg) translateY(3px); }
+        }
+
+        .grass-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            z-index: 5;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 5%;
+        }
+
+        .grass {
+            width: 4px;
+            background: linear-gradient(180deg, #32CD32 0%, #228B22 100%);
+            border-radius: 2px 2px 0 0;
+            animation: grassSway 2s ease-in-out infinite;
+        }
+
+        .grass:nth-child(odd) { animation-delay: -0.5s; }
+        .grass:nth-child(3n) { animation-delay: -1s; }
+        .grass:nth-child(5n) { animation-delay: -1.5s; }
+
+        @keyframes grassSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .grass-1 { height: 30px; }
+        .grass-2 { height: 45px; }
+        .grass-3 { height: 35px; }
+        .grass-4 { height: 50px; }
+        .grass-5 { height: 25px; }
+        .grass-6 { height: 40px; }
+        .grass-7 { height: 38px; }
+        .grass-8 { height: 55px; }
+        .grass-9 { height: 32px; }
+        .grass-10 { height: 48px; }
+        .grass-11 { height: 28px; }
+        .grass-12 { height: 42px; }
+        .grass-13 { height: 36px; }
+        .grass-14 { height: 52px; }
+        .grass-15 { height: 34px; }
+
+        .flower {
+            position: absolute;
+            z-index: 6;
+            animation: flowerSway 3s ease-in-out infinite;
+        }
+
+        .flower::before, .flower::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .flower-1 { bottom: 8%; left: 12%; }
+        .flower-1::before { background: #FF69B4; left: 0; top: 0; }
+        .flower-1::after { background: #FF1493; left: 5px; top: 3px; }
+
+        .flower-2 { bottom: 10%; left: 28%; }
+        .flower-2::before { background: #FFD700; left: 0; top: 0; }
+        .flower-2::after { background: #FFA500; left: 5px; top: 3px; }
+
+        .flower-3 { bottom: 7%; left: 45%; }
+        .flower-3::before { background: #FFB6C1; left: 0; top: 0; }
+        .flower-3::after { background: #FF69B4; left: 5px; top: 3px; }
+
+        .flower-4 { bottom: 9%; left: 62%; }
+        .flower-4::before { background: #00CED1; left: 0; top: 0; }
+        .flower-4::after { background: #20B2AA; left: 5px; top: 3px; }
+
+        .flower-5 { bottom: 8%; right: 25%; }
+        .flower-5::before { background: #FFD700; left: 0; top: 0; }
+        .flower-5::after { background: #FFA500; left: 5px; top: 3px; }
+
+        .flower-6 { bottom: 11%; right: 10%; }
+        .flower-6::before { background: #FF69B4; left: 0; top: 0; }
+        .flower-6::after { background: #FF1493; left: 5px; top: 3px; }
+
+        @keyframes flowerSway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .oriole {
+            position: absolute;
+            z-index: 7;
+            animation: orioleFly 8s ease-in-out infinite;
+        }
+
+        .oriole::before, .oriole::after {
+            content: '';
+            position: absolute;
+            background: #FFD700;
+            border-radius: 50%;
+        }
+
+        .oriole-1 {
+            top: 25%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .oriole-2 {
+            top: 30%;
+            left: 60%;
+            animation-delay: -3s;
+        }
+
+        .oriole-3 {
+            top: 20%;
+            left: 80%;
+            animation-delay: -6s;
+        }
+
+        .oriole::before {
+            width: 15px;
+            height: 12px;
+        }
+
+        .oriole::after {
+            width: 8px;
+            height: 8px;
+            background: #FFA500;
+            top: 2px;
+            left: -6px;
+            border-radius: 50% 0 0 50%;
+        }
+
+        @keyframes orioleFly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, -20px) rotate(15deg); }
+            50% { transform: translate(100px, 10px) rotate(0deg); }
+            75% { transform: translate(50px, 30px) rotate(-15deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .river {
+            position: absolute;
+            bottom: 12%;
+            left: 0;
+            width: 100%;
+            height: 8%;
+            background: linear-gradient(180deg,
+                rgba(135, 206, 235, 0.6) 0%,
+                rgba(70, 130, 180, 0.4) 50%,
+                rgba(100, 149, 237, 0.5) 100%);
+            border-radius: 0 0 50% 50%;
+            z-index: 5;
+            animation: riverFlow 4s ease-in-out infinite;
+        }
+
+        @keyframes riverFlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .river-reflection {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 80%;
+            height: 60%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 100%);
+            animation: reflectionMove 3s ease-in-out infinite;
+        }
+
+        @keyframes reflectionMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .poem {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .poem-title {
+            font-size: 36px;
+            color: #2C5F2D;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            letter-spacing: 8px;
+        }
+
+        .poem-text {
+            font-size: 24px;
+            color: #3D5C3D;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+            letter-spacing: 4px;
+        }
+
+        .poem-author {
+            font-size: 18px;
+            color: #5D7C5D;
+            margin-top: 15px;
+            letter-spacing: 2px;
+        }
+
+        .border-decoration {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border: 2px solid rgba(44, 95, 45, 0.3);
+            border-radius: 15px;
+            z-index: 11;
+            pointer-events: none;
+        }
+
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(44, 95, 45, 0.4);
+        }
+
+        .corner-tl {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 8px 0 0 0;
+        }
+
+        .corner-tr {
+            top: -2px;
+            right: -2px;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 8px 0 0;
+        }
+
+        .corner-bl {
+            bottom: -2px;
+            left: -2px;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 8px;
+        }
+
+        .corner-br {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 8px 0;
+        }
+
+        .butterfly {
+            position: absolute;
+            z-index: 8;
+            animation: butterflyFly 12s ease-in-out infinite;
+        }
+
+        .butterfly::before, .butterfly::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .butterfly::after {
+            transform: scaleX(-1);
+            left: 15px;
+        }
+
+        .butterfly-1 {
+            top: 40%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .butterfly-2 {
+            top: 45%;
+            left: 75%;
+            animation-delay: -5s;
+        }
+
+        @keyframes butterflyFly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            16% { transform: translate(30px, -25px) rotate(30deg); }
+            33% { transform: translate(60px, -10px) rotate(-15deg); }
+            50% { transform: translate(40px, 20px) rotate(0deg); }
+            66% { transform: translate(10px, 15px) rotate(-20deg); }
+            83% { transform: translate(-20px, -5px) rotate(25deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @media (max-width: 768px) {
+            .poster {
+                height: 500px;
+            }
+            .poem-title {
+                font-size: 24px;
+            }
+            .poem-text {
+                font-size: 18px;
+            }
+            .sun {
+                width: 40px;
+                height: 40px;
+                top: 40px;
+                right: 80px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="poster">
+        <div class="sky">
+            <div class="sun"></div>
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+            <div class="mist"></div>
+        </div>
+
+        <div class="river">
+            <div class="river-reflection"></div>
+        </div>
+
+        <div class="willow-container">
+            <div class="willow-tree willow-tree-1">
+                <div class="willow-trunk">
+                    <div class="willow-branch branch-1">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                    <div class="willow-branch branch-2">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                    <div class="willow-branch branch-3">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="willow-tree willow-tree-2">
+                <div class="willow-trunk">
+                    <div class="willow-branch branch-4">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                    <div class="willow-branch branch-5">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="willow-tree willow-tree-3">
+                <div class="willow-trunk">
+                    <div class="willow-branch branch-1">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                    <div class="willow-branch branch-2">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="willow-tree willow-tree-4">
+                <div class="willow-trunk">
+                    <div class="willow-branch branch-3">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                    <div class="willow-branch branch-4">
+                        <div class="willow-leaves">
+                            <div class="leaf"></div>
+                            <div class="leaf"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grass-container">
+            <div class="grass grass-1"></div>
+            <div class="grass grass-2"></div>
+            <div class="grass grass-3"></div>
+            <div class="grass grass-4"></div>
+            <div class="grass grass-5"></div>
+            <div class="grass grass-6"></div>
+            <div class="grass grass-7"></div>
+            <div class="grass grass-8"></div>
+            <div class="grass grass-9"></div>
+            <div class="grass grass-10"></div>
+            <div class="grass grass-11"></div>
+            <div class="grass grass-12"></div>
+            <div class="grass grass-13"></div>
+            <div class="grass grass-14"></div>
+            <div class="grass grass-15"></div>
+        </div>
+
+        <div class="flower flower-1"></div>
+        <div class="flower flower-2"></div>
+        <div class="flower flower-3"></div>
+        <div class="flower flower-4"></div>
+        <div class="flower flower-5"></div>
+        <div class="flower flower-6"></div>
+
+        <div class="oriole oriole-1"></div>
+        <div class="oriole oriole-2"></div>
+        <div class="oriole oriole-3"></div>
+
+        <div class="butterfly butterfly-1"></div>
+        <div class="butterfly butterfly-2"></div>
+
+        <div class="poem">
+            <div class="poem-title">早春美景</div>
+            <div class="poem-text">草长莺飞二月天</div>
+            <div class="poem-text">拂堤杨柳醉春烟</div>
+            <div class="poem-author">—— 清·高鼎</div>
+        </div>
+
+        <div class="border-decoration">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+        </div>
+    </div>
+</body>
+</html>
